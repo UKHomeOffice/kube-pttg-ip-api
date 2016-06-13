@@ -1,5 +1,4 @@
-# pttg-income-api-k8
-Proving Things - Income API -  Kubernetes Resources
+# Proving Things - Income API -  Kubernetes Resources
 
 ### Kubernetes Deployment
 
