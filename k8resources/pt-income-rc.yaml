@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: pttg-income-proving-api
+  labels:
+    name: pttg-income-proving-api
+spec:
+  replicas: 1
+  selector:
+    name: pttg-income-proving-api
+  template:
+    metadata:
+      labels:
+        name: pttg-income-proving-api
+    spec:
+      containers:
+      - name: proxy
+        image: quay.io/ukhomeofficedigital/nginx-proxy:v1.1.5
+        env:
+          - name: PROXY_SERVICE_HOST
+            value: '127.0.0.1'
+          - name: PROXY_SERVICE_PORT
+            value: '8081'
+          - name: LOAD_BALANCER_CIDR
+            value: '10.50.0.0/22'
+          - name: NAXSI_USE_DEFAULT_RULES
+            value: 'FALSE'
+          - name: ENABLE_UUID_PARAM
+            value: 'FALSE'
+        ports:
+          - name: https
+            containerPort: 443
+      - name: pttg-income-proving-api
+        image: quay.io/ukhomeofficedigital/pttg-income-proving-api:${ pt-income-version }
+        resources:
+          limits:
+            cpu: 200m
+            memory: 1024Mi
+          requests:
+            cpu: 200m
+            memory: 1024Mi
+        ports:
+          - name: http
+            containerPort: 8081
+        imagePullPolicy: Always
