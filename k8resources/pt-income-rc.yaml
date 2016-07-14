@@ -4,6 +4,7 @@ metadata:
   name: pttg-income-proving-api
   labels:
     name: pttg-income-proving-api
+    version: ${pt-income-version}
 spec:
   replicas: 1
   selector:
@@ -12,6 +13,7 @@ spec:
     metadata:
       labels:
         name: pttg-income-proving-api
+        version: ${pt-income-version}
     spec:
       containers:
       - name: proxy
