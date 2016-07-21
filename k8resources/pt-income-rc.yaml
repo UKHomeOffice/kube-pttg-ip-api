@@ -49,7 +49,7 @@ spec:
         image: quay.io/ukhomeofficedigital/nginx:master
         env:
           - name: NGINX_CONFIG
-            value: |
+            value: |-
             user nginx;
             worker_processes auto;
             access_log /dev/stdout combined;
