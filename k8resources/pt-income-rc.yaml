@@ -46,24 +46,41 @@ spec:
           - mountPath: /etc/nginx/secrets
             name: secrets
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx-proxy:v1.1.5
+        image: quay.io/ukhomeofficedigital/nginx:master
         env:
-          - name: PROXY_SERVICE_HOST
-            value: '127.0.0.1'
-          - name: PROXY_SERVICE_PORT
-            value: '8081'
-          - name: LOAD_BALANCER_CIDR
-            value: '10.50.0.0/22'
-          - name: NAXSI_USE_DEFAULT_RULES
-            value: 'FALSE'
-          - name: ENABLE_UUID_PARAM
-            value: 'FALSE'
-          - name: SERVER_CERT
-            value: /etc/nginx/secrets/pttg-income-proving-api.crt
-          - name: SERVER_KEY
-            value: /etc/nginx/secrets/pttg-income-proving-api.key
-          - name: LOG_FORMAT_NAME
-            value: text
+          - name: NGINX_CONFIG
+            value: |
+            user nginx;
+            worker_processes auto;
+            access_log /dev/stdout combined;
+            error_log /dev/stderr error;
+
+            events {
+                worker_connections 1024;
+            }
+
+            http {
+                sendfile            on;
+                tcp_nopush          on;
+                tcp_nodelay         on;
+                keepalive_timeout   65;
+                types_hash_max_size 2048;
+
+                include             /etc/nginx/mime.types;
+                default_type        application/octet-stream;
+
+                server {
+                    listen       443 ssl default_server;
+                    server_name  _;
+
+                    ssl_certificate     /etc/nginx/secrets/pttg-income-proving-api.crt;
+                    ssl_certificate_key /etc/nginx/secrets/pttg-income-proving-api.key;
+
+                    location / {
+                        return 200 "Everything is OK.\n";
+                    }
+                }
+            }
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
