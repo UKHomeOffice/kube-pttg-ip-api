@@ -62,6 +62,8 @@ spec:
             value: /etc/nginx/secrets/pttg-income-proving-api.crt
           - name: SERVER_KEY
             value: /etc/nginx/secrets/pttg-income-proving-api.key
+          - name: LOG_FORMAT_NAME
+            value: text
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
