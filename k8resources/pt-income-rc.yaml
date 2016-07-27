@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ReplicationController
 metadata:
@@ -46,65 +47,25 @@ spec:
           - mountPath: /etc/nginx/secrets
             name: secrets
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx:v0.0.1
+        image: quay.io/ukhomeofficedigital/nginx-proxy:v1.5.1
+        imagePullPolicy: Always
         env:
-          - name: NGINX_CONFIG
-            value: |
-              user nginx;
-              worker_processes auto;
-              error_log /dev/stderr error;
-
-              events {
-                  worker_connections 1024;
-              }
-
-              http {
-                  sendfile            on;
-                  tcp_nopush          on;
-                  tcp_nodelay         on;
-                  keepalive_timeout   65;
-                  types_hash_max_size 2048;
-
-                  include             /etc/nginx/mime.types;
-                  default_type        application/octet-stream;
-
-                  server {
-                      listen        80 proxy_protocol;
-                      server_name   _;
-
-                      access_log /dev/stdout combined;
-
-                      location / {
-                          return 200 "Everything is OK.\n";
-                      }
-                  }
-
-                  server {
-                      listen       443 ssl;
-                      server_name  pttg-income-proving-api.pt-i-dev.svc.cluster.local;
-
-                      access_log /dev/stdout combined;
-
-                      ssl_certificate     /etc/nginx/secrets/pttg-income-proving-api.crt;
-                      ssl_certificate_key /etc/nginx/secrets/pttg-income-proving-api.key;
-                      ssl_protocols  TLSv1.2;
-                      ssl_ciphers    HIGH:!aNULL:!MD5;
-                      ssl_session_cache shared:SSL:20m;
-                      ssl_session_timeout 4h;
-                      ssl_session_tickets on;
-
-                      location / {
-                          proxy_pass http://localhost:8080;
-                      }
-                      location /nginx_status {
-                        stub_status;
-                        access_log   off;
-                        allow 10.200.0.0/16;
-                        allow 127.0.0.1/32;
-                        deny all;
-                      }
-                  }
-              }
+          - name: PROXY_SERVICE_HOST
+            value: '127.0.0.1'
+          - name: PROXY_SERVICE_PORT
+            value: '8080'
+          - name: LOAD_BALANCER_CIDR
+            value: '10.50.0.0/22'
+          - name: NAXSI_USE_DEFAULT_RULES
+            value: 'TRUE'
+          - name: ENABLE_UUID_PARAM
+            value: 'FALSE'
+          - name: SERVER_CERT
+            value: /etc/nginx/secrets/pttg-income-proving-api.crt
+          - name: SERVER_KEY
+            value: /etc/nginx/secrets/pttg-income-proving-api.key
+          - name: LOG_FORMAT_NAME
+            value: text
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
@@ -112,8 +73,6 @@ spec:
         ports:
           - name: https
             containerPort: 443
-          - name: proxyhttp
-            containerPort: 80
       - name: pttg-income-proving-api
         image: quay.io/ukhomeofficedigital/pttg-income-proving-api:${ pt-income-version }
         resources:
