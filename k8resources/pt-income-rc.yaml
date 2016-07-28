@@ -57,7 +57,7 @@ spec:
           - name: LOAD_BALANCER_CIDR
             value: '10.50.0.0/22'
           - name: NAXSI_USE_DEFAULT_RULES
-            value: 'TRUE'
+            value: 'FALSE'
           - name: ENABLE_UUID_PARAM
             value: 'FALSE'
           - name: SERVER_CERT
