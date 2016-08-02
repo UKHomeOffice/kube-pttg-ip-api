@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 RC='rc/pttg-income-proving-api'
-RCFILE='k8resources/pttg-income-rc.yaml'
+RCFILE='k8resources/pt-income-rc.yaml'
 APPNAME='pttg-income-proving-ui'
 NAMESPACE='pt-i-dev'
 
@@ -21,6 +21,6 @@ then
     echo "--- updating the ${APPNAME} RC ..."
     ./kubectl -s https://kube-dev.dsp.notprod.homeoffice.gov.uk --insecure-skip-tls-verify=true --namespace=${NAMESPACE} --token=0225CE5B-C9C8-4F3B-BE49-3217B65B41B8 delete ${RC}
 else
-    echo "--- ${APPNAME} RC doesn't exist, moving on ..."
+    echo "--- ${APPNAME} RC doesn't exist, therefore I don't need to delete it, moving on ..."
 fi
 ./kubectl -s https://kube-dev.dsp.notprod.homeoffice.gov.uk --insecure-skip-tls-verify=true --namespace=${NAMESPACE} --token=0225CE5B-C9C8-4F3B-BE49-3217B65B41B8 create -f ${RCFILE}
