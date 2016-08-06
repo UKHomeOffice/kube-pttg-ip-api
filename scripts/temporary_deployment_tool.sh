@@ -23,6 +23,7 @@ function rc() {
   echo "--- waiting for the pods in the RC: ${RC} to go into the running state"
   timeout ${RCTIMEOUT} bash <<EOT
 function checkRc(){
+  sleep 5
   if [[ `kubectl ${KUBECTL_FLAGS} describe ${RC} |grep "Pod.*Status" | awk '{print $3}'` -gt 0 ]];
   then
     echo "pods inside RC: ${RC} have been deployed succesfully"
