@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# temporary script in place until https://github.com/UKHomeOffice/kb8or/issues/93 if fixed
+
 RC='rc/pttg-income-proving-api'
 RCFILE='k8resources/pt-income-rc.yaml'
 RCTIMEOUT='5m'
