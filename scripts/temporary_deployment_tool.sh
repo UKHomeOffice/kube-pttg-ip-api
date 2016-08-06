@@ -20,7 +20,7 @@ function rc() {
   fi
   ./kubectl ${KUBECTL_FLAGS} create -f ${RCFILE}
 
-  echo "--- waiting for the pods in the RC: ${RC} to go into the running state"
+  echo "--- waiting for the pods in the RC: ${RC} to go into the running state --- timeout:${RCTIMEOUT}"
   timeout ${RCTIMEOUT} bash <<EOT
 function checkRc(){
   sleep 5
