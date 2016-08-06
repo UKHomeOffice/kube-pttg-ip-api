@@ -33,6 +33,8 @@ function checkRc(){
 }
 checkRc
 EOT
+  echo "--- current status of the RC ${RC} : "
+  kubectl ${KUBECTL_FLAGS} describe rc/pttg-income-proving-ui |grep "Pod.*Status" -B2
 }
 
 
