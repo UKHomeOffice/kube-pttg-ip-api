@@ -20,7 +20,7 @@ function rc() {
   ./kubectl -s https://kube-dev.dsp.notprod.homeoffice.gov.uk --insecure-skip-tls-verify=true --namespace=${NAMESPACE} --token=0225CE5B-C9C8-4F3B-BE49-3217B65B41B8 create -f ${RCFILE}
 
   echo "--- waiting for the pods in the RC: ${RC} to go into the running state"
-  timeout ${RCTIMEOUT} checkRc
+  timeout ${RCTIMEOUT} bash -c "checkRc"
 }
 
 function checkRc(){
