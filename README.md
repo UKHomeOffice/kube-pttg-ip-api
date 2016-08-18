@@ -8,4 +8,4 @@ As it stands this is using [KB8OR for deployments](https://github.com/UKHomeOffi
 
 run deployment
 
-	./scripts/deploy -e dev ./pt-income.yaml
+	./scripts/deploy -e dev ./pttg-ip-api.yaml

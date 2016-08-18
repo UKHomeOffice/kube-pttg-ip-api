@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: pttg-income-proving-api
-  name: pttg-income-proving-api
+    name: pttg-ip-api
+  name: pttg-ip-api
 spec:
   type: NodePort
   ports:
@@ -14,4 +14,4 @@ spec:
     targetPort: https
     nodePort: ${ptincome_port}
   selector:
-    name: pttg-income-proving-api
+    name: pttg-ip-api
