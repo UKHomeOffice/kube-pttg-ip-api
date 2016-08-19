@@ -78,9 +78,9 @@ spec:
           - name: HTTPS_REDIRECT
             value: 'FALSE'
           - name: SERVER_CERT
-            value: /etc/nginx/secrets/pttg-income-proving-api-bundle.pem
+            value: /etc/nginx/secrets/pttg-ip-api-bundle.pem
           - name: SERVER_KEY
-            value: /etc/nginx/secrets/pttg-income-proving-api-key.pem
+            value: /etc/nginx/secrets/pttg-ip-api-key.pem
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
