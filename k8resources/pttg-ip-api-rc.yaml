@@ -92,6 +92,9 @@ spec:
             containerPort: 80
       - name: pttg-ip-api
         image: quay.io/ukhomeofficedigital/pttg-ip-api:${ pt-income-version }
+        env:
+          - name: MONGODB_SERVICE
+            value: 'pttg-mongodb.pt-i-dev.svc.cluster.local'
         resources:
           limits:
             cpu: 200m
