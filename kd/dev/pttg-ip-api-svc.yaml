@@ -1,17 +1,16 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    name: pttg-ip-api
-  name: pttg-ip-api
+    name: pttg-ip-api-testing
+  name: pttg-ip-api-testing
 spec:
-  type: NodePort
   ports:
   - name: http
     port: 80
   - name: https
     port: 443
     targetPort: https
-    nodePort: ${ptincome_port}
   selector:
-    name: pttg-ip-api
+    name: pttg-ip-api-testing
