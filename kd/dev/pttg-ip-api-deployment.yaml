@@ -2,19 +2,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: pttg-ip-api-testing
+  name: pttg-ip-api
   labels:
-    name: pttg-ip-api-testing
+    name: pttg-ip-api
     version: {{.VERSION}}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      name: pttg-ip-api-testing
+      name: pttg-ip-api
   template:
     metadata:
       labels:
-        name: pttg-ip-api-testing
+        name: pttg-ip-api
         version: {{.VERSION}}
     spec:
       containers:
@@ -91,7 +91,7 @@ spec:
             containerPort: 443
           - name: http
             containerPort: 80
-      - name: pttg-ip-api-testing
+      - name: pttg-ip-api
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
           - name: MONGODB_SERVICE
