@@ -6,6 +6,7 @@ set -e
 # docker run --rm -ti --entrypoint=bash -v $PWD/kd:/kd -e ENVIRONMENT -e APP quay.io/ukhomeofficedigital/kd:${KD_VERSION}
 
 VERSION=$1
+ENVIRONMENT=$2
 KD_BINARY='kd_linux_amd64'
 KD_VERSION='v0.1.0'
 KD_MD5='45aeb54e3eb78cadfd824c1650b427ce'
@@ -14,7 +15,6 @@ KUBECTL_BINARY='kubectl'
 KUBECTL_VERSION='v1.3.5'
 KUBECTL_MD5='26852c9bd750a2afee527658944397d1'
 KUBECTL_DOWNLOAD_ADDR="https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
-ENVIRONMENT='dev'
 APP='pttg-ip-api'
 
 function getKd() {
@@ -60,4 +60,4 @@ kubectl version --client
 echo "deploying ..."
 export VERSION
 export ENVIRONMENT
-./kd_linux_amd64 --context=pt-i-dev --namespace=pt-i-dev --file kd/${ENVIRONMENT}/${APP}-deployment.yaml --file kd/${ENVIRONMENT}/${APP}-svc.yaml
+./kd_linux_amd64 --context=pt-i-dev --namespace=pt-i-${ENVIRONMENT} --file kd/${ENVIRONMENT}/${APP}-deployment.yaml --file kd/${ENVIRONMENT}/${APP}-svc.yaml

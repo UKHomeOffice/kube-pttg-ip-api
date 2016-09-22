@@ -4,3 +4,4 @@ tmp
 kubectl
 kd_linux_amd64
 .tags*
+*.iml
