@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: pttg-ip-api
   labels:
-    name: pttg-ip-api
     version: {{.VERSION}}
 spec:
   replicas: 2
@@ -77,6 +76,8 @@ spec:
       - name: pttg-ip-api
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
+          - name: JAVA_OPTS
+            value: "-Xms512m -Xmx768m"
           - name: MONGODB_SERVICE
             value: 'pttg-mongodb.pt-i-{{.ENVIRONMENT}}.svc.cluster.local'
           - name: SERVER_PORT
