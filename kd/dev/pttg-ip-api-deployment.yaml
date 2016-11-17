@@ -53,7 +53,7 @@ spec:
           - name: PROXY_SERVICE_HOST
             value: '127.0.0.1'
           - name: PROXY_SERVICE_PORT
-            value: '8080'
+            value: '9000'
           - name: NAXSI_USE_DEFAULT_RULES
             value: 'FALSE'
           - name: ENABLE_UUID_PARAM
@@ -73,6 +73,35 @@ spec:
             containerPort: 443
           - name: http
             containerPort: 80
+      - name: keycloak-proxy
+        image: quay.io/ukhomeofficedigital/go-keycloak-proxy:v1.2.7
+        args:
+          - --config=/etc/secrets/keycloak-api-secret.yaml
+          - --discovery-url=https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev
+          - --client-id=pttg-fs-{{.ENVIRONMENT}}
+          - --listen=127.0.0.1:9000
+          - --log-requests=true
+          - --json-logging=true
+          - --upstream-url=http://127.0.0.1:8080
+          - --no-redirects=true
+          - --redirection-url=https://pttg-ip-fm-ui-{{.ENVIRONMENT}}.notprod.homeoffice.gov.uk
+          - --cors-origins='*'
+          - --resource=uri=/healthz|white-listed=true
+          - --resource=uri=/|methods=GET|roles=pttg-user
+          - --secure-cookie=true
+          - --verbose
+        imagePullPolicy: Always
+        ports:
+          - name: keycloak-http
+            containerPort: 9000
+        volumeMounts:
+        - name: keycloak-api-secret
+          mountPath: /etc/secrets
+          readOnly: true
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: 100m
       - name: pttg-ip-api
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
@@ -117,3 +146,6 @@ spec:
       - name: secrets
         emptyDir:
           medium: "Memory"
+      - name: keycloak-api-secret
+        secret:
+          secretName: keycloak-api-secret
