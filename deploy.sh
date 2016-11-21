@@ -6,6 +6,7 @@ export KUBE_SERVER=${KUBE_SERVER_DEV}
 export KUBE_TOKEN=${KUBE_TOKEN}
 
 cd kd
-kd --insecure-skip-tls-verify \
+kd --retries=20 \
+   --insecure-skip-tls-verify \
    --file ${ENVIRONMENT}/pttg-ip-api-deployment.yaml \
    --file ${ENVIRONMENT}/pttg-ip-api-svc.yaml
