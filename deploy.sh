@@ -3,6 +3,7 @@ export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export ENVIRONMENT=${ENVIRONMENT}
 export APP=pttg-ip-api
 export KUBE_SERVER=${KUBE_SERVER_DEV}
+export KUBE_TOKEN=${KUBE_TOKEN}
 
 echo "deploying ..."
 cd kd
