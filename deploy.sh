@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export KUBE_NAMESPACE=${KUBE_NAMESPACE:-${DRONE_DEPLOY_TO}}
+export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export ENVIRONMENT=${ENVIRONMENT}
 export APP=pttg-ip-api
 export KUBE_SERVER=${KUBE_SERVER_DEV}
