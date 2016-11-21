@@ -6,5 +6,5 @@ export KUBE_SERVER=${KUBE_SERVER_DEV}
 
 cd kd
 kd --debug --insecure-skip-tls-verify \
-   --file ${ENVIRONMENT}/${APP}-deployment.yaml \
-   --file ${ENVIRONMENT}/${APP}-svc.yaml
+   --file dev/pttg-ip-api-deployment.yaml \
+   --file dev/pttg-ip-api-svc.yaml
