@@ -75,9 +75,11 @@ spec:
             containerPort: 80
       - name: keycloak-proxy
         image: quay.io/ukhomeofficedigital/go-keycloak-proxy:v1.2.7
+        env:
+          - name: PROXY_DISCOVERY_URL
+          - value: https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev
         args:
           - --config=/etc/secrets/keycloak-api-secret.yaml
-          - --discovery-url=https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev
           - --client-id=pttg-fs-{{.ENVIRONMENT}}
           - --listen=127.0.0.1:9000
           - --log-requests=true
@@ -106,18 +108,18 @@ spec:
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
           - name: JAVA_OPTS
-            value: "-Xms512m -Xmx768m"
+            value: "-Xms150m -Xmx250m"
           - name: MONGODB_SERVICE
-            value: 'pttg-mongodb.pt-i-{{.ENVIRONMENT}}.svc.cluster.local'
+            value: 'pttg-mongodb'
           - name: SERVER_PORT
             value: '8080'
         resources:
           limits:
-            cpu: 200m
-            memory: 2048Mi
+            cpu: 1800m
+            memory: 612Mi
           requests:
-            cpu: 200m
-            memory: 1024Mi
+            cpu: 100m
+            memory: 484Mi
         ports:
           - name: http
             containerPort: 8080
