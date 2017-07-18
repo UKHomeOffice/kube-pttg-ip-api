@@ -49,6 +49,13 @@ spec:
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v1.5.1
         imagePullPolicy: Always
+        resources:
+         limits:
+          memory: "100Mi"
+          cpu: 100m
+         requests:
+          memory: "50Mi"
+          cpu: 100m
         env:
           - name: PROXY_SERVICE_HOST
             value: '127.0.0.1'
@@ -75,6 +82,13 @@ spec:
             containerPort: 80
       - name: keycloak-proxy
         image: quay.io/ukhomeofficedigital/go-keycloak-proxy:v1.2.7
+        resources:
+         limits:
+          memory: "100Mi"
+          cpu: 100m
+         requests:
+          memory: "50Mi"
+          cpu: 100m
         env:
           - name: HRMC_SERVICE_URL
             value: "http://pttg-ip-hmrc"
@@ -117,7 +131,7 @@ spec:
             value: '8080'
         resources:
           limits:
-            cpu: 1800m
+            cpu: 1700m
             memory: 612Mi
           requests:
             cpu: 100m
