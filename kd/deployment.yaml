@@ -77,9 +77,9 @@ spec:
         image: quay.io/ukhomeofficedigital/go-keycloak-proxy:v1.2.7
         env:
           - name: HRMC_SERVICE_URL
-          - value: http://pttg-ip-hmrc
+            value: "http://pttg-ip-hmrc"
           - name: PROXY_DISCOVERY_URL
-          - value: https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev
+            value: "https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev"
         args:
           - --config=/etc/secrets/keycloak-api-secret.yaml
           - --client-id=pttg-fs-{{.ENVIRONMENT}}
