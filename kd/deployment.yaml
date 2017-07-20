@@ -90,8 +90,6 @@ spec:
           memory: "50Mi"
           cpu: 100m
         env:
-          - name: HRMC_SERVICE_URL
-            value: "http://pttg-ip-hmrc"
           - name: PROXY_DISCOVERY_URL
             value: "https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev"
         args:
@@ -129,6 +127,8 @@ spec:
             value: 'pttg-mongodb'
           - name: SERVER_PORT
             value: '8080'
+          - name: HRMC_SERVICE_URL
+            value: "http://pttg-ip-hmrc"
         resources:
           limits:
             cpu: 1700m
