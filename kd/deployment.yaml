@@ -91,7 +91,15 @@ spec:
           cpu: 100m
         env:
           - name: PROXY_DISCOVERY_URL
-            value: "https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-dev"
+            valueFrom:
+              configMapKeyRef:
+                name: endpoint-config
+                key: PROXY_DISCOVERY_URL
+          - name: PROXY_REDIRECTION_URL
+            valueFrom:
+              configMapKeyRef:
+                name: endpoint-config
+                key: PROXY_REDIRECTION_URL
         args:
           - --config=/etc/secrets/keycloak-api-secret.yaml
           - --client-id=pttg-fs-{{.ENVIRONMENT}}
@@ -100,7 +108,6 @@ spec:
           - --json-logging=true
           - --upstream-url=http://127.0.0.1:8080
           - --no-redirects=true
-          - --redirection-url=https://pttg-ip-fm-ui-{{.ENVIRONMENT}}.notprod.homeoffice.gov.uk
           - --cors-origins='*'
           - --resource=uri=/healthz|white-listed=true
           - --resource=uri=/|methods=GET|roles=pttg-user
