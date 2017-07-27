@@ -46,6 +46,37 @@ spec:
         volumeMounts:
           - mountPath: /etc/nginx/secrets
             name: secrets
+      - name: vaultjks
+        image: quay.io/ukhomeofficedigital/vaultjks:v0.1.0
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 100m
+            memory: "100Mi"
+          requests:
+            cpu: 100m
+            memory: "50Mi"
+        env:
+          - name: VAULT_ADDR
+            value: "https://vault.vault.svc.cluster.local:8200"
+          - name: VAULT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: store-token
+                key: token
+          - name: VAULT_PKI_PATH
+            value: services/pt-i-{{.ENVIRONMENT}}/pki
+          - name: VAULT_ROLE_NAME
+            value: default
+          - name: SLEEP_FOREVER
+            value: "true"
+          - name: IP_SAN
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        volumeMounts:
+          - mountPath: /data
+            name: javapki
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v1.5.1
         imagePullPolicy: Always
@@ -84,16 +115,14 @@ spec:
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
           - name: JAVA_OPTS
-            value: "-Xms150m -Xmx250m"
-          - name: MONGODB_SERVICE
-            value: 'pttg-mongodb'
+            value: "-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks"
           - name: SERVER_PORT
             value: '8080'
           - name: HRMC_SERVICE_URL
-            value: "http://pttg-ip-hmrc"
+            value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
         resources:
           limits:
-            cpu: 1700m
+            cpu: 1600m
             memory: 612Mi
           requests:
             cpu: 100m
@@ -122,8 +151,15 @@ spec:
           periodSeconds: 20
           timeoutSeconds: 10
         imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /data
+            name: javapki
+            readOnly: true
       volumes:
       - name: secrets
+        emptyDir:
+          medium: "Memory"
+      - name: javapki
         emptyDir:
           medium: "Memory"
       - name: keycloak-api-secret
