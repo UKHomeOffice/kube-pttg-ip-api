@@ -115,11 +115,13 @@ spec:
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
           - name: JAVA_OPTS
-            value: "-Xms150m -Xmx250m -Djavax.net.debug=all -Djavax.net.ssl.trustStore=/data/truststore.jks"
+            value: "-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks"
           - name: SERVER_PORT
             value: '8080'
           - name: HRMC_SERVICE_URL
             value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
+          - name: JDK_TRUST_FILE
+            value: '/data/truststore.jks'
         resources:
           limits:
             cpu: 1600m
