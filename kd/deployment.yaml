@@ -133,7 +133,7 @@ spec:
           - name: http
             containerPort: 80
       - name: pttg-ip-shell
-        image: quay.io/ukhomeofficedigital/centos-base
+        image: quay.io/ukhomeofficedigital/centos-base:latest
         env:
           - name: PTTG_DB_HOSTNAME
             value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
