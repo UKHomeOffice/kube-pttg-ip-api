@@ -99,7 +99,7 @@ spec:
           - mountPath: /etc/nginx/secrets
             name: secrets
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx-proxy:v1.5.1
+        image: quay.io/ukhomeofficedigital/nginx-proxy:latest
         imagePullPolicy: Always
         resources:
          limits:
