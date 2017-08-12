@@ -99,7 +99,7 @@ spec:
           - mountPath: /etc/nginx/secrets
             name: secrets
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx-proxy:latest
+        image: quay.io/ukhomeofficedigital/nginx-proxy:v1.5.1
         imagePullPolicy: Always
         resources:
          limits:
@@ -132,6 +132,34 @@ spec:
             containerPort: 443
           - name: http
             containerPort: 80
+      - name: pttg-ip-shell
+        image: quay.io/ukhomeofficedigital/nginx-proxy:latest
+        imagePullPolicy: Always
+        resources:
+         limits:
+          memory: "100Mi"
+          cpu: 100m
+         requests:
+          memory: "50Mi"
+          cpu: 100m
+        env:
+          - name: PROXY_SERVICE_HOST
+            value: '127.0.0.1'
+          - name: PROXY_SERVICE_PORT
+            value: '8080'
+          - name: NAXSI_USE_DEFAULT_RULES
+            value: 'FALSE'
+          - name: ENABLE_UUID_PARAM
+            value: 'FALSE'
+          - name: HTTPS_REDIRECT
+            value: 'FALSE'
+          - name: SERVER_CERT
+            value: /etc/nginx/secrets/pttg-ip-api-bundle.pem
+          - name: SERVER_KEY
+            value: /etc/nginx/secrets/pttg-ip-api-key.pem
+        ports:
+          - name: http
+            containerPort: 8080
 #      - name: pttg-ip-shell
 #        image: quay.io/ukhomeofficedigital/centos-base:latest
 #        env:
