@@ -1,0 +1,50 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pttg-ip-api-db
+  labels:
+    version: first
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: pttg-ip-api-db
+  selector:
+    matchLabels:
+      name: pttg-ip-api-db
+  template:
+    metadata:
+      labels:
+        name: pttg-ip-api-db
+        version: first
+    spec:
+      imagePullSecrets:
+      - name: registrykey
+      containers:
+      - name: pttg-ip-api-db
+        image: quay.io/repository/tim_hammonds/pttg-postgres:latest
+        imagePullPolicy: Always
+        env:
+          - name: PTTG_DB_HOSTNAME
+            value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
+          - name: PTTG_DB_PORT
+            value: '5432'
+          - name: PTTG_DB_NAME
+            value: "pti{{.ENVIRONMENT}}"
+          - name: IP_SCHEMA_NAME
+            value: 'pttg_ip'
+          - name: IP_DB_USERNAME
+            value: 'root'
+          - name: IP_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: password
+        resources:
+         limits:
+          memory: "100Mi"
+          cpu: 100m
+         requests:
+          memory: "50Mi"
+          cpu: 100m

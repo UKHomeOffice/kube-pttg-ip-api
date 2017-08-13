@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: pttg-ip-api-db
+  name: pttg-ip-api-db
+spec:
+  ports:
+  - name: http
+    port: 80
+  - name: https
+    port: 443
+    targetPort: https
+  - name: api
+    port: 8080
+  selector:
+    name: pttg-ip-api-db
