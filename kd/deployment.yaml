@@ -146,7 +146,7 @@ spec:
           - name: PTTG_DB_PORT
             value: '5432'
           - name: PTTG_DB_NAME
-            value: 'pti{{.ENVIRONMENT}}'
+            value: "pti{{.ENVIRONMENT}}"
           - name: IP_SCHEMA_NAME
             value: 'pttg_ip'
           - name: IP_DB_USERNAME
@@ -158,7 +158,7 @@ spec:
               secretKeyRef:
                 name: pttg-rds-access
                 key: password
-#          - name: HRMC_SERVICE_URL
+          - name: HRMC_SERVICE_URL
             value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
           - name: JDK_TRUST_FILE
             value: '/data/truststore.jks'
