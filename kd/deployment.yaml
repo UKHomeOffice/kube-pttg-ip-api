@@ -150,13 +150,15 @@ spec:
           - name: IP_SCHEMA_NAME
             value: 'pttg_ip'
           - name: IP_DB_USERNAME
-            value: 'root'
+            value: 'pttg'
           - name: IP_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: pttg-rds-access
-                key: password
-          - name: HRMC_SERVICE_URL
+            value: 'pttg'
+#          - name: IP_DB_PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: pttg-rds-access
+#                key: password
+#          - name: HRMC_SERVICE_URL
             value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
           - name: JDK_TRUST_FILE
             value: '/data/truststore.jks'
