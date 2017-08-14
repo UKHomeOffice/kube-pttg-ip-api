@@ -133,7 +133,8 @@ spec:
           - name: http
             containerPort: 80
       - name: pttg-ip-api-db
-        image: quay.io/ukhomeofficedigital/pttg-postgres:latest
+#        image: quay.io/ukhomeofficedigital/pttg-postgres:latest
+        image: postgres
         imagePullPolicy: Always
         env:
           - name: PTTG_DB_HOSTNAME
