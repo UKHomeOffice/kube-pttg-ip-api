@@ -132,32 +132,32 @@ spec:
             containerPort: 443
           - name: http
             containerPort: 80
-#      - name: pttg-ip-api-db
-#        image: quay.io/ukhomeofficedigital/pttg-postgres:latest
-#        imagePullPolicy: Always
-#        env:
-#          - name: PTTG_DB_HOSTNAME
-#            value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
-#          - name: PTTG_DB_PORT
-#            value: '5432'
-#          - name: PTTG_DB_NAME
-#            value: "pti{{.ENVIRONMENT}}"
-#          - name: IP_SCHEMA_NAME
-#            value: 'pttg_ip'
-#          - name: IP_DB_USERNAME
-#            value: 'root'
-#          - name: IP_DB_PASSWORD
-#            valueFrom:
-#              secretKeyRef:
-#                name: pttg-rds-access
-#                key: password
-#        resources:
-#         limits:
-#          memory: "100Mi"
-#          cpu: 100m
-#         requests:
-#          memory: "50Mi"
-#          cpu: 100m
+      - name: pttg-ip-api-db
+        image: quay.io/ukhomeofficedigital/pttg-postgres:latest
+        imagePullPolicy: Always
+        env:
+          - name: PTTG_DB_HOSTNAME
+            value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
+          - name: PTTG_DB_PORT
+            value: '5432'
+          - name: PTTG_DB_NAME
+            value: "pti{{.ENVIRONMENT}}"
+          - name: IP_SCHEMA_NAME
+            value: 'pttg_ip'
+          - name: IP_DB_USERNAME
+            value: 'root'
+          - name: IP_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: password
+        resources:
+         limits:
+          memory: "100Mi"
+          cpu: 100m
+         requests:
+          memory: "50Mi"
+          cpu: 100m
 #      - name: pttg-ip-api
 #        image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
 #        env:
