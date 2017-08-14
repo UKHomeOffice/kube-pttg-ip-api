@@ -23,7 +23,7 @@ spec:
       - name: registrykey
       containers:
       - name: pttg-ip-api-db
-        image: quay.io/repository/ukhomeofficedigital/pttg-postgres:latest
+        image: quay.io/ukhomeofficedigital/pttg-postgres:latest
         imagePullPolicy: Always
         env:
           - name: PTTG_DB_HOSTNAME

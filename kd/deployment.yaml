@@ -132,10 +132,15 @@ spec:
             containerPort: 443
           - name: http
             containerPort: 80
-      - name: pttg-ip-api-db
-        image: quay.io/ukhomeofficedigital/pttg-postgres:latest
-        imagePullPolicy: Always
+      - name: pttg-ip-api
+        image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
         env:
+          - name: JAVA_OPTS
+            value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks'
+          - name: SERVER_PORT
+            value: '8080'
+          - name: SPRING_PROFILES_ACTIVE
+            value: 'postgres'
           - name: PTTG_DB_HOSTNAME
             value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
           - name: PTTG_DB_PORT
@@ -151,84 +156,53 @@ spec:
               secretKeyRef:
                 name: pttg-rds-access
                 key: password
+          - name: HRMC_SERVICE_URL
+            value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
+          - name: JDK_TRUST_FILE
+            value: '/data/truststore.jks'
+          - name: AUDITING_DEPLOYMENT_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: AUDITING_DEPLOYMENT_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
         resources:
-         limits:
-          memory: "100Mi"
-          cpu: 100m
-         requests:
-          memory: "50Mi"
-          cpu: 100m
-#      - name: pttg-ip-api
-#        image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
-#        env:
-#          - name: JAVA_OPTS
-#            value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks'
-#          - name: SERVER_PORT
-#            value: '8080'
-#          - name: SPRING_PROFILES_ACTIVE
-#            value: 'postgres'
-#          - name: PTTG_DB_HOSTNAME
-#            value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
-#          - name: PTTG_DB_PORT
-#            value: '5432'
-#          - name: PTTG_DB_NAME
-#            value: "pti{{.ENVIRONMENT}}"
-#          - name: IP_SCHEMA_NAME
-#            value: 'pttg_ip'
-#          - name: IP_DB_USERNAME
-#            value: 'root'
-#          - name: IP_DB_PASSWORD
-#            valueFrom:
-#              secretKeyRef:
-#                name: pttg-rds-access
-#                key: password
-#          - name: HRMC_SERVICE_URL
-#            value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
-#          - name: JDK_TRUST_FILE
-#            value: '/data/truststore.jks'
-#          - name: AUDITING_DEPLOYMENT_NAME
-#            valueFrom:
-#              fieldRef:
-#                fieldPath: metadata.name
-#          - name: AUDITING_DEPLOYMENT_NAMESPACE
-#            valueFrom:
-#              fieldRef:
-#                fieldPath: metadata.namespace
-#        resources:
-#          limits:
-#            cpu: 1600m
-#            memory: 612Mi
-#          requests:
-#            cpu: 100m
-#            memory: 484Mi
-#        ports:
-#          - name: http
-#            containerPort: 8080
-#        livenessProbe:
-#          httpGet:
-#            path: /ping
-#            port: http
-#            httpHeaders:
-#              - name: X-probe
-#                value: kubelet
-#          initialDelaySeconds: 10
-#          periodSeconds: 20
-#          timeoutSeconds: 10
-#        readinessProbe:
-#          httpGet:
-#            path: /healthz
-#            port: http
-#            httpHeaders:
-#              - name: X-probe
-#                value: kubelet
-#          initialDelaySeconds: 10
-#          periodSeconds: 20
-#          timeoutSeconds: 10
-#        imagePullPolicy: Always
-#        volumeMounts:
-#          - mountPath: /data
-#            name: javapki
-#            readOnly: true
+          limits:
+            cpu: 1600m
+            memory: 612Mi
+          requests:
+            cpu: 100m
+            memory: 484Mi
+        ports:
+          - name: http
+            containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: http
+            httpHeaders:
+              - name: X-probe
+                value: kubelet
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+            httpHeaders:
+              - name: X-probe
+                value: kubelet
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          timeoutSeconds: 10
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /data
+            name: javapki
+            readOnly: true
       volumes:
       - name: secrets
         emptyDir:
