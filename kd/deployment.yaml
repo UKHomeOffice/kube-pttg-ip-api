@@ -152,12 +152,10 @@ spec:
           - name: IP_DB_USERNAME
             value: 'root'
           - name: IP_DB_PASSWORD
-            value: 'wlkd344ddfg355fgH7yhddsrsgh'
-#          - name: IP_DB_PASSWORD
-#            valueFrom:
-#              secretKeyRef:
-#                name: pttg-rds-access
-#                key: password
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: password
           - name: HRMC_SERVICE_URL
             value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
           - name: JDK_TRUST_FILE
