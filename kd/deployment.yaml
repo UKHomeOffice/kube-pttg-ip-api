@@ -182,7 +182,7 @@ spec:
             containerPort: 8080
         livenessProbe:
           httpGet:
-            path: /ping
+            path: /info
             port: http
             httpHeaders:
               - name: X-probe
