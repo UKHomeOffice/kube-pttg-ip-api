@@ -150,10 +150,9 @@ spec:
           - name: IP_SCHEMA_NAME
             value: 'pttg_ip'
           - name: IP_DB_USERNAME
-            value: 'root'
+            value: 'pttg'
           - name: IP_DB_PASSWORD
-            value: 'wlkd344ddfg355fgH7yhddsrsgh'
-#          - name: IP_DB_PASSWORD
+            value: 'pttg'
 #            valueFrom:
 #              secretKeyRef:
 #                name: pttg-rds-access
