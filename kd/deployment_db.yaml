@@ -26,16 +26,31 @@ spec:
         image: quay.io/ukhomeofficedigital/pttg-postgres:latest
         imagePullPolicy: Always
         env:
-          - name: PTTG_DB_HOSTNAME
-            value: 'pds3v8fj4qak1h.coaznai19bkh.eu-west-1.rds.amazonaws.com'
+         - name: PTTG_DB_HOSTNAME
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: endpoint
           - name: PTTG_DB_PORT
-            value: '5432'
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: port
           - name: PTTG_DB_NAME
-            value: "pti{{.ENVIRONMENT}}"
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: database_name
           - name: IP_SCHEMA_NAME
-            value: 'pttg_ip'
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: schema
           - name: IP_DB_USERNAME
-            value: 'root'
+            valueFrom:
+              secretKeyRef:
+                name: pttg-rds-access
+                key: username
           - name: IP_DB_PASSWORD
             valueFrom:
               secretKeyRef:
