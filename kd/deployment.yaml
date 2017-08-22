@@ -193,6 +193,8 @@ spec:
         ports:
           - name: http
             containerPort: 8080
+          - name: jmx
+            containerPort: 9092
         livenessProbe:
           httpGet:
             path: /info
