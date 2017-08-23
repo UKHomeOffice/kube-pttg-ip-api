@@ -140,7 +140,7 @@ spec:
           - name: SERVER_PORT
             value: '8080'
           - name: ENDPOINTS_INFO_ENABLED
-            value: 'false'
+            value: false
           - name: SPRING_PROFILES_ACTIVE
             value: 'postgres'
           - name: PTTG_DB_HOSTNAME
