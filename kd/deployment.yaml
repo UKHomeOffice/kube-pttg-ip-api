@@ -139,6 +139,8 @@ spec:
             value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks'
           - name: SERVER_PORT
             value: '8080'
+          - ENDPOINTS_INFO_ENABLED
+            value: 'false'
           - name: SPRING_PROFILES_ACTIVE
             value: 'postgres'
           - name: PTTG_DB_HOSTNAME
