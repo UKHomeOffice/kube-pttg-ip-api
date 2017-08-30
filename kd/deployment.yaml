@@ -196,7 +196,7 @@ spec:
                 name: endpoint-config
                 key: BASE_SYSDIG_URL
           - name: ALERT_ACCEPTABLE_HOURS_START
-            value: "09:30"
+            value: "14:00"
         resources:
           limits:
             cpu: 1600m
