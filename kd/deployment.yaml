@@ -142,7 +142,7 @@ spec:
           - name: ENDPOINTS_INFO_ENABLED
             value: 'false'
           - name: SPRING_PROFILES_ACTIVE
-            value: 'postgres'
+            value: 'postgres,not-production'
           - name: PTTG_DB_HOSTNAME
             valueFrom:
               secretKeyRef:
