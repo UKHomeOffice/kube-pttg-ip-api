@@ -157,12 +157,9 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: pttg-rds-access
-                key: database_name
+                key: database
           - name: IP_SCHEMA_NAME
-            valueFrom:
-              secretKeyRef:
-                name: pttg-rds-access
-                key: schema
+            value: 'pttg_schema'
           - name: IP_DB_USERNAME
             valueFrom:
               secretKeyRef:
