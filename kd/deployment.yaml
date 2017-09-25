@@ -128,7 +128,7 @@ spec:
             value: /etc/nginx/secrets/pttg-ip-api-bundle.pem
           - name: SERVER_KEY
             value: /etc/nginx/secrets/pttg-ip-api-key.pem
-          - name: ADD_NGINX_HTTP_CFG
+          - name: ADD_NGINX_SERVER_CFG
             value: 'gzip off;'
         volumeMounts:
           - name: secrets
