@@ -33,7 +33,6 @@ spec:
              "SETGID"
            ]
          }
-       }
       },
       "imagePullPolicy": "Always",
       "env": [
