@@ -26,6 +26,15 @@ spec:
    {
       "name": "vaultjks",
       "image": "quay.io/ukhomeofficedigital/vaultjks:v0.1.0",
+      "securityContext": {
+         "capabilities": {
+           "drop": [
+             "SETUID",
+             "SETGID"
+           ]
+         }
+       }
+      },
       "imagePullPolicy": "Always",
       "env": [
          {
@@ -77,6 +86,11 @@ spec:
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
+        securityContext:
+           capabilities:
+             drop:
+               - SETUID
+               - SETGID
         resources:
          limits:
           memory: "100Mi"
@@ -106,6 +120,11 @@ spec:
       - name: proxy
         image: quay.io/ukhomeofficedigital/pttg-nginx-proxy:v3.1.3a
         imagePullPolicy: Always
+        securityContext:
+           capabilities:
+             drop:
+               - SETUID
+               - SETGID
         resources:
          limits:
           memory: "100Mi"
@@ -139,6 +158,11 @@ spec:
             containerPort: 10443
       - name: pttg-ip-api
         image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
+        securityContext:
+           capabilities:
+             drop:
+               - SETUID
+               - SETGID
         env:
           - name: JAVA_OPTS
             value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks'

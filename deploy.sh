@@ -6,6 +6,6 @@ then
 fi
 
 cd kd
-kd --insecure-skip-tls-verify --retries=10 \
+kd --insecure-skip-tls-verify --retries=20 \
    --file service.yaml \
    --file deployment.yaml
