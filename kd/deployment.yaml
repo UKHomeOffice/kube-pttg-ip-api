@@ -147,7 +147,7 @@ spec:
           - name: SERVER_KEY
             value: /etc/nginx/secrets/pttg-ip-api-key.pem
           - name: ADD_NGINX_SERVER_CFG
-            value: 'gzip off;'
+            value: 'gzip off;ssl_verify_client on;'
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
