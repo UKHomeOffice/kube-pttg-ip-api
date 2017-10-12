@@ -173,7 +173,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: pttg-ip-hmrc-service-secrets
-                key: .htpasswd_1
+                key: password
           - name: PTTG_DB_HOSTNAME
             valueFrom:
               secretKeyRef:
