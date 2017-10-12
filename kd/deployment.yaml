@@ -169,6 +169,11 @@ spec:
             value: 'false'
           - name: SPRING_PROFILES_ACTIVE
             value: 'postgres'
+          - name: HMRC_SERVICE_AUTH
+            valueFrom:
+              secretKeyRef:
+                name: pttg-ip-hmrc-service-secrets
+                key: .htpasswd_1
           - name: PTTG_DB_HOSTNAME
             valueFrom:
               secretKeyRef:
