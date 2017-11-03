@@ -234,6 +234,13 @@ spec:
               configMapKeyRef:
                 name: endpoint-config
                 key: BASE_SYSDIG_URL
+          - name: AUDIT_SERVICE_AUTH
+            valueFrom:
+              secretKeyRef:
+                name: pttg-audit-service-secrets
+                key: pttg_ip_api
+          - name: PTTG_AUDIT_URL
+            value: 'https://pttg-ip-audit.pt-i-{{.ENVIRONMENT}}.svc.cluster.local'
         resources:
           limits:
             cpu: 1600m
