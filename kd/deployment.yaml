@@ -171,6 +171,8 @@ spec:
         env:
           - name: JAVA_OPTS
             value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/data/truststore.jks'
+          - name: JDK_TRUST_FILE
+            value: '/data/truststore.jks'
           - name: SERVER_PORT
             value: '8080'
           - name: ENDPOINTS_INFO_ENABLED
@@ -182,6 +184,43 @@ spec:
               secretKeyRef:
                 name: pttg-hmrc-service-secrets
                 key: pttg_ip_api
+          - name: HRMC_SERVICE_URL
+            value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
+          - name: HMRC_SERVICE_RETRY_ATTEMPTS
+            valueFrom:
+              configMapKeyRef:
+                name: rest-retry-config
+                key: HMRC_SERVICE_RETRY_ATTEMPTS
+          - name: HMRC_SERVICE_RETRY_DELAY
+            valueFrom:
+              configMapKeyRef:
+                name: rest-retry-config
+                key: HMRC_SERVICE_RETRY_DELAY
+          - name: AUDIT_SERVICE_AUTH
+            valueFrom:
+              secretKeyRef:
+                name: pttg-audit-service-secrets
+                key: pttg_ip_api
+          - name: PTTG_AUDIT_URL
+            value: 'https://pttg-ip-audit.pt-i-{{.ENVIRONMENT}}.svc.cluster.local'
+          - name: AUDITING_DEPLOYMENT_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: AUDITING_DEPLOYMENT_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: AUDIT_SERVICE_RETRY_ATTEMPTS
+            valueFrom:
+              configMapKeyRef:
+                name: rest-retry-config
+                key: AUDIT_SERVICE_RETRY_ATTEMPTS
+          - name: AUDIT_SERVICE_RETRY_DELAY
+            valueFrom:
+              configMapKeyRef:
+                name: rest-retry-config
+                key: AUDIT_SERVICE_RETRY_DELAY
           - name: PTTG_DB_HOSTNAME
             valueFrom:
               secretKeyRef:
@@ -212,35 +251,6 @@ spec:
               secretKeyRef:
                 name: db-secrets
                 key: application_password
-          - name: HRMC_SERVICE_URL
-            value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
-          - name: JDK_TRUST_FILE
-            value: '/data/truststore.jks'
-          - name: AUDITING_DEPLOYMENT_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: AUDITING_DEPLOYMENT_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: SYSDIG_ACCESS_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: sysdig-secrets
-                key: token
-          - name: SYSDIG_SERVICE_URL
-            valueFrom:
-              configMapKeyRef:
-                name: endpoint-config
-                key: BASE_SYSDIG_URL
-          - name: AUDIT_SERVICE_AUTH
-            valueFrom:
-              secretKeyRef:
-                name: pttg-audit-service-secrets
-                key: pttg_ip_api
-          - name: PTTG_AUDIT_URL
-            value: 'https://pttg-ip-audit.pt-i-{{.ENVIRONMENT}}.svc.cluster.local'
         resources:
           limits:
             cpu: 1600m
