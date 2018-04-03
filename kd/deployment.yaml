@@ -145,8 +145,8 @@ spec:
           image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
           imagePullPolicy: Always
           securityContext:
+            runAsNonRoot: true
             capabilities:
-              runAsNonRoot: true
               drop:
                 - SETUID
                 - SETGID
