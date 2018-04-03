@@ -119,14 +119,14 @@ spec:
               value: 'FALSE'
             - name: HTTPS_REDIRECT
               value: 'FALSE'
-            - name: SERVER_CERT
-              value: /etc/nginx/secrets/pttg-ip-api-bundle.pem
-            - name: SERVER_KEY
-              value: /etc/nginx/secrets/pttg-ip-api-key.pem
-            - name: ADD_NGINX_SERVER_CFG
-              value: 'gzip off;'
             - name: BASIC_AUTH
               value: /etc/nginx/service-secrets/.htpasswd_1
+            - name: SERVER_CERT
+              value: /certs/tls.pem
+            - name: SERVER_KEY
+              value: /certs/tls-key.pem
+            - name: ADD_NGINX_SERVER_CFG
+              value: 'gzip off; location = /reload { allow 127.0.0.1; deny all; content_by_lua_block { os.execute("touch /tmp/nginx-reload-triggered; /usr/local/openresty/nginx/sbin/nginx -s reload; touch /tmp/nginx-reload-complete;") } }'
           volumeMounts:
             - name: certs
               mountPath: /certs
