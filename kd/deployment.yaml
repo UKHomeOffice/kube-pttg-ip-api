@@ -164,8 +164,8 @@ spec:
                 secretKeyRef:
                   name: pttg-hmrc-service-secrets
                   key: pttg_ip_api
-            - name: HRMC_SERVICE_URL
-              value: "https://pttg-ip-hmrc.pt-i-{{.ENVIRONMENT}}.svc.cluster.local"
+            - name: HMRC_SERVICE_URL
+              value: "https://pttg-ip-hmrc.pttg-ip-{{.ENVIRONMENT}}.svc.cluster.local"
             - name: HMRC_SERVICE_RETRY_ATTEMPTS
               valueFrom:
                 configMapKeyRef:
@@ -182,7 +182,7 @@ spec:
                   name: pttg-audit-service-secrets
                   key: pttg_ip_api
             - name: PTTG_AUDIT_URL
-              value: 'https://pttg-ip-audit.pt-i-{{.ENVIRONMENT}}.svc.cluster.local'
+              value: 'https://pttg-ip-audit.pttg-ip-{{.ENVIRONMENT}}.svc.cluster.local'
             - name: AUDITING_DEPLOYMENT_NAME
               valueFrom:
                 fieldRef:
