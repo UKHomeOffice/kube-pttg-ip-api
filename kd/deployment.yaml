@@ -35,7 +35,7 @@ spec:
           args:
             - --certs=/certs
             - --command=/usr/bin/create-keystore.sh
-            - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
+            - --domain=${KUBE_NAMESPACE}.svc.cluster.local
             - --domain=localhost
             - --onetime=true
           env:
@@ -62,7 +62,7 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
-            - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
+            - --domain=${KUBE_NAMESPACE}.svc.cluster.local
             - --expiry=8760h
             - --command=/usr/local/scripts/trigger_nginx_reload.sh
           env:
