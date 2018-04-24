@@ -24,9 +24,8 @@ spec:
       imagePullSecrets:
         - name: registrykey
       initContainers:
-        
-        - name: get-ca-certs
-          image: quay.io/ukhomeofficedigital/cfssl-sidekick:v0.0.2
+        - name: truststore
+          image: quay.io/ukhomeofficedigital/cfssl-sidekick-jks:latest
           securityContext:
             runAsNonRoot: true
             capabilities:
@@ -35,37 +34,23 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
+            - --command=/usr/bin/create-keystore.sh
             - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
+            - --domain=localhost
             - --onetime=true
           env:
-            - name: KUBE_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+          - name: KUBE_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
           volumeMounts:
-            - name: certs
-              mountPath: /certs
-            - name: bundle
-              mountPath: /etc/ssl/certs
-              readOnly: true
-        
-        - name: create-truststore
-          image: quay.io/ukhomeofficedigital/pttg-docker-openjdk8:latest
-          securityContext:
-            runAsNonRoot: true
-            capabilities:
-              drop:
-                - SETUID
-                - SETGID
-          volumeMounts:
-            - name: store
-              mountPath: /store
-            - name: bundle
-              mountPath: /etc/ssl/certs
-              readOnly: true
-          command: ["/bin/sh"]
-          args: ["-c", "keytool -import -alias servercert -file /etc/ssl/certs/ca-bundle.crt -keystore /store/truststore.jks -noprompt -storepass changeit"]
-      
+          - name: certs
+            mountPath: /certs
+          - name: keystore
+            mountPath: /etc/keystore
+          - name: bundle
+            mountPath: /etc/ssl/certs
+            readOnly: true
       containers:
         - name: certs
           image: quay.io/ukhomeofficedigital/pttg-cfssl-sidekick:build-6
@@ -152,7 +137,7 @@ spec:
                 - SETGID
           env:
             - name: JAVA_OPTS
-              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/store/truststore.jks -Djavax.net.debug=SSL'
+              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/etc/truststore.jks -Djavax.net.debug=SSL'
             - name: JDK_TRUST_FILE
               value: '/store/truststore.jks'
             - name: SERVER_PORT
