@@ -137,9 +137,9 @@ spec:
                 - SETGID
           env:
             - name: JAVA_OPTS
-              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/etc/truststore.jks -Djavax.net.debug=SSL'
+              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/etc/keystore/truststore.jks -Djavax.net.debug=SSL'
             - name: JDK_TRUST_FILE
-              value: '/store/truststore.jks'
+              value: '/etc/keystore/truststore.jks'
             - name: SERVER_PORT
               value: '8080'
             - name: ENDPOINTS_INFO_ENABLED
@@ -217,11 +217,11 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 10
           volumeMounts:
-            - mountPath: /store
-              name: store
+            - mountPath: /etc/keystore
+              name: keystore
               readOnly: true
       volumes:
-        - name: store
+        - name: keystore
           emptyDir:
             medium: "Memory"
         - name: certs
