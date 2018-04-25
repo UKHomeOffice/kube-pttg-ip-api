@@ -34,7 +34,7 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
-            - --command=/usr/bin/create-keystore.sh /etc/ssl/certs/ca-bundle.crt /certs/tls-key.pem
+            - --command=/usr/bin/create-keystore.sh
             - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
             - --domain=localhost
             - --onetime=true
