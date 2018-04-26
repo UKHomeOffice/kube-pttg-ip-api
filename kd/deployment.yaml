@@ -34,7 +34,7 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
-            - --command=/usr/bin/create-keystore.sh
+            - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/acp-root.crt
             - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
             - --domain=localhost
             - --onetime=true
@@ -55,7 +55,7 @@ spec:
             readOnly: true
       containers:
         - name: certs
-          image: quay.io/ukhomeofficedigital/pttg-cfssl-sidekick:build-6
+          image: quay.io/ukhomeofficedigital/cfssl-sidekick-jks:latest
           securityContext:
             runAsNonRoot: true
             capabilities:
@@ -139,7 +139,7 @@ spec:
                 - SETGID
           env:
             - name: JAVA_OPTS
-              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/etc/keystore/truststore.jks -Djavax.net.debug=SSL'
+              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/etc/keystore/truststore.jks'
             - name: JDK_TRUST_FILE
               value: '/etc/keystore/truststore.jks'
             - name: SERVER_PORT
