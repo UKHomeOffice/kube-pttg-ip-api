@@ -44,7 +44,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: DEBUG
-            value: true
+            value: 'TRUE'
           volumeMounts:
           - name: certs
             mountPath: /certs
