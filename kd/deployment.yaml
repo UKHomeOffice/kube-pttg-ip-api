@@ -34,7 +34,7 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
-            - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/acp-root.crt
+            - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/ca-certificates.crt
             - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
             - --domain=localhost
             - --onetime=true
@@ -62,7 +62,7 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
-            - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/acp-root.crt
+            - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/ca-certificates.crt
             - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
             - --expiry=8760h
             - --command=/usr/local/scripts/trigger_nginx_reload.sh
