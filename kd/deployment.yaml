@@ -53,7 +53,7 @@ spec:
             readOnly: true
       containers:
         - name: certs
-          image: quay.io/ukhomeofficedigital/cfssl-sidekick-jks:latest
+          image: quay.io/ukhomeofficedigital/cfssl-sidekick:latest
           securityContext:
             runAsNonRoot: true
             capabilities:
@@ -62,7 +62,6 @@ spec:
                 - SETGID
           args:
             - --certs=/certs
-            - --command=/usr/bin/create-keystore.sh /certs/tls.pem /certs/tls-key.pem /etc/ssl/certs/acp-root.crt
             - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
             - --expiry=8760h
             - --command=/usr/local/scripts/trigger_nginx_reload.sh
@@ -74,8 +73,6 @@ spec:
           volumeMounts:
             - name: certs
               mountPath: /certs
-            - name: keystore
-              mountPath: /etc/keystore
             - name: bundle
               mountPath: /etc/ssl/certs
               readOnly: true
