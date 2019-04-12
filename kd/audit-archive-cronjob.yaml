@@ -31,7 +31,7 @@ spec:
             args:
             - /bin/sh
             - -ec
-            - curl -X POST {{.PTTG_AUDIT_URL}}/archive -H "Authorization: Basic {{.AUDIT_SERVICE_AUTH}}"
+            - curl -X POST ${PTTG_AUDIT_URL}/archive -H "Authorization: Basic ${AUDIT_SERVICE_AUTH}"
             env:
               - name: AUDIT_SERVICE_AUTH
                 valueFrom:
