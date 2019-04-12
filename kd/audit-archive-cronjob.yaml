@@ -3,9 +3,8 @@ kind: CronJob
 metadata:
   name: pttg-ip-audit-archive-cronjob
   labels:
-    version: {{.Values.shortHash  | quote }}
-    application: eue-api
-    canary: {{ .Values.global.canary | quote }}
+    version: {{.VERSION}}
+    application: pttg-ip-api
 spec:
   schedule: "* * * * *"
 #  schedule: "33 3 * * *"
