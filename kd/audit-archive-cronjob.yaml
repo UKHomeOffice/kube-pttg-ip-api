@@ -7,7 +7,8 @@ metadata:
     application: eue-api
     canary: {{ .Values.global.canary | quote }}
 spec:
-  schedule: "33 3 * * *"
+  schedule: "* * * * *"
+#  schedule: "33 3 * * *"
   successfulJobsHistoryLimit: 12
   failedJobsHistoryLimit: 12
   concurrencyPolicy: Replace
