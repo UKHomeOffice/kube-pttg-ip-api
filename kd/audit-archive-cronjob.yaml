@@ -1,0 +1,34 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pttg-ip-audit-archive-cronjob
+  labels:
+    version: {{.Values.shortHash  | quote }}
+    application: eue-api
+    canary: {{ .Values.global.canary | quote }}
+spec:
+  schedule: "33 3 * * *"
+  successfulJobsHistoryLimit: 12
+  failedJobsHistoryLimit: 12
+  concurrencyPolicy: Replace
+  startingDeadlineSeconds: 120
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: pttg-ip-audit-archive-cronjob
+        spec:
+          containers:
+          - name: trigger-audit-archive
+            image: buildpack-deps:curl
+            securityContext:
+              runAsNonRoot: true
+              capabilities:
+              drop:
+              - SETUID
+              - SETGID
+            args:
+            - /bin/sh
+            - -ec
+            - curl -X POST {{.PTTG_AUDIT_URL}}/archive -H "Authorization: Basic {{.AUDIT_SERVICE_AUTH}}"
