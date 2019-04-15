@@ -22,7 +22,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: trigger-audit-archive
-            image: buildpack-deps:curl
+            image: quay.io/ukhomeofficedigital/centos-base
             securityContext:
               runAsNonRoot: true
               capabilities:
