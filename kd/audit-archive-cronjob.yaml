@@ -29,7 +29,7 @@ spec:
                 - SETGID
             command: ["/bin/sh", "-c"]
             args:
-              - http_status = (curl -X POST ${PTTG_AUDIT_URL}/archive -H 'Authorization: Basic ${AUDIT_SERVICE_AUTH}'); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi
+              - http_status=(curl -X POST ${PTTG_AUDIT_URL}/archive -H 'Authorization: Basic ${AUDIT_SERVICE_AUTH}'); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi;
           restartPolicy: OnFailure
             env:
               - name: AUDIT_SERVICE_AUTH
