@@ -24,7 +24,6 @@ spec:
           - name: trigger-audit-archive
             image: quay.io/ukhomeofficedigital/centos-base
             securityContext:
-              runAsNonRoot: true
               capabilities:
                 drop:
                 - SETUID
