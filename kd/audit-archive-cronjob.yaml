@@ -19,8 +19,9 @@ spec:
           labels:
             name: pttg-ip-audit-archive-cronjob
         spec:
+          restartPolicy: OnFailure
           containers:
-          - name: trigger-audit-archive
+          - name: pttg-trigger-audit-archive
             image: quay.io/ukhomeofficedigital/openjdk11
             securityContext:
               capabilities:
@@ -29,8 +30,8 @@ spec:
                 - SETGID
             command: ["/bin/sh", "-c"]
             args:
-              - http_status=(curl -X POST ${PTTG_AUDIT_URL}/archive -H 'Authorization: Basic ${AUDIT_SERVICE_AUTH}'); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi;
-          restartPolicy: OnFailure
+              - "http_status=$( curl -X POST -H 'Authorization: Basic ${AUDIT_SERVICE_AUTH}' ${PTTG_AUDIT_URL}/archive ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi"
+#              - http_status=$( curl -vk -u ${HOCS_BASICAUTH} -w '%{http_code}' https://hocs-info-service.{{.KUBE_NAMESPACE}}.svc.cluster.local/admin/member/refresh ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi
             env:
               - name: AUDIT_SERVICE_AUTH
                 valueFrom:
