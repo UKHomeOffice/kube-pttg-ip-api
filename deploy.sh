@@ -28,7 +28,7 @@ fi
 cd kd
 
 kd --insecure-skip-tls-verify \
+    -f audit-archive-cronjob.yaml \
     -f networkPolicy.yaml \
     -f deployment.yaml \
-    -f service.yaml \
-    -f audit-archive-cronjob.yaml
+    -f service.yaml
