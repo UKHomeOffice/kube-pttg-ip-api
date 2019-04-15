@@ -25,13 +25,13 @@ spec:
             securityContext:
               runAsNonRoot: true
               capabilities:
-              drop:
-              - SETUID
-              - SETGID
+                drop:
+                - SETUID
+                - SETGID
             args:
-            - /bin/sh
-            - -ec
-            - curl -X POST ${PTTG_AUDIT_URL}/archive -H "Authorization: Basic ${AUDIT_SERVICE_AUTH}"
+              - /bin/sh
+              - -ec
+              - 'curl -X POST ${PTTG_AUDIT_URL}/archive -H "Authorization: Basic ${AUDIT_SERVICE_AUTH}"'
             env:
               - name: AUDIT_SERVICE_AUTH
                 valueFrom:
