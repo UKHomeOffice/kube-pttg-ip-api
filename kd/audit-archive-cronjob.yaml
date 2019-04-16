@@ -63,10 +63,10 @@ spec:
                 value: 'https://pttg-ip-audit.pttg-ip-{{.ENVIRONMENT}}.svc.cluster.local'
               - name: SSL_CERT_FILE
                 value: /certs/tls.pem
-      volumes:
-        - name: certs
-          emptyDir:
-            medium: "Memory"
-        - name: bundle
-          configMap:
-            name: bundle
+          volumes:
+            - name: certs
+              emptyDir:
+                medium: "Memory"
+            - name: bundle
+              configMap:
+                name: bundle
