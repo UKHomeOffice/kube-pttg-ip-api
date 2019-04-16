@@ -24,10 +24,8 @@ spec:
           - name: pttg-trigger-audit-archive
             image: quay.io/ukhomeofficedigital/openjdk11
             securityContext:
-              capabilities:
-                drop:
-                - SETUID
-                - SETGID
+              runAsNonRoot: true
+              runAsUser: 1000
             command: ["/bin/sh", "-c"]
             args:
               - "http_status=$( curl -X POST -H 'Authorization: Basic ${AUDIT_SERVICE_AUTH}' ${PTTG_AUDIT_URL}/archive ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi"
