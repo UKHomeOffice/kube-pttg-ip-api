@@ -21,6 +21,30 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
+          - name: certs
+            image: quay.io/ukhomeofficedigital/cfssl-sidekick:v0.0.6
+            securityContext:
+              runAsNonRoot: true
+              capabilities:
+                drop:
+                  - SETUID
+                  - SETGID
+            args:
+              - --certs=/certs
+              - --domain=pttg-ip-api.${KUBE_NAMESPACE}.svc.cluster.local
+              - --expiry=8760h
+              - --command=/usr/local/scripts/trigger_nginx_reload.sh
+            env:
+              - name: KUBE_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            volumeMounts:
+              - name: certs
+                mountPath: /certs
+              - name: bundle
+                mountPath: /etc/ssl/certs
+                readOnly: true
           - name: pttg-trigger-audit-archive
             image: quay.io/ukhomeofficedigital/openjdk11
             securityContext:
@@ -29,7 +53,6 @@ spec:
             command: ["/bin/sh", "-c"]
             args:
               - "http_status=$( curl -X POST -H 'Authorization: Basic ${AUDIT_SERVICE_AUTH}' ${PTTG_AUDIT_URL}/archive ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi"
-#              - http_status=$( curl -vk -u ${HOCS_BASICAUTH} -w '%{http_code}' https://hocs-info-service.{{.KUBE_NAMESPACE}}.svc.cluster.local/admin/member/refresh ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi
             env:
               - name: AUDIT_SERVICE_AUTH
                 valueFrom:
@@ -38,3 +61,12 @@ spec:
                     key: pttg_ip_api
               - name: PTTG_AUDIT_URL
                 value: 'https://pttg-ip-audit.pttg-ip-{{.ENVIRONMENT}}.svc.cluster.local'
+              - name: SSL_CERT_FILE
+                value: /certs/tls.pem
+      volumes:
+        - name: certs
+          emptyDir:
+            medium: "Memory"
+        - name: bundle
+          configMap:
+            name: bundle
