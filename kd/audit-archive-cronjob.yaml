@@ -6,7 +6,7 @@ metadata:
     version: {{.VERSION}}
     application: pttg-ip-api
 spec:
-  schedule: "15 12 * * *"
+  schedule: "14 55 * * *"
   successfulJobsHistoryLimit: 12
   failedJobsHistoryLimit: 12
   concurrencyPolicy: Replace
