@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pttg-ip-audit-archive-cronjob
+  labels:
+    version: {{.VERSION}}
+    application: pttg-ip-api
+spec:
+  schedule: "30 7 * * *"
+  successfulJobsHistoryLimit: 12
+  failedJobsHistoryLimit: 12
+  concurrencyPolicy: Replace
+  startingDeadlineSeconds: 120
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: pttg-ip-audit-archive-cronjob
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: pttg-trigger-audit-archive
+            image: quay.io/ukhomeofficedigital/openjdk11
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+            command: ["/bin/sh", "-ce"]
+            args:
+              - 'http_status=$( curl -kv -X POST -H "Authorization: Basic $(echo -n ${IP_API_SERVICE_AUTH} | base64)" ${PTTG_IP_API_URL}/archive ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi'
+            env:
+              - name: IP_API_SERVICE_AUTH
+                valueFrom:
+                  secretKeyRef:
+                    name: pttg-ip-api-service-secrets
+                    key: pttg_ip_audit_archive_cronjob
+              - name: PTTG_IP_API_URL
+                value: 'https://pttg-ip-api.pttg-ip-{{.ENVIRONMENT}}.svc.cluster.local'
