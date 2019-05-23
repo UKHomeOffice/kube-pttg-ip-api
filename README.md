@@ -1,11 +1,11 @@
-## Proving Things - Income API -  Kubernetes Resources
+Income Proving API Kubernetes Deployment
+=
 
-### Kubernetes Deployment
+## Overview
 
-This is the kubernetes deployment files for Proving Things Income API
+This project defines the Kubernetes deployment for [pttg-ip-api] on the ACP platform using [Drone].
 
-As it stands this is using [KB8OR for deployments](https://github.com/UKHomeOffice/kb8or)
 
-run deployment
+[pttg-ip-api]:                    https://github.com/UKHomeOffice/pttg-ip-api
+[Drone]:                            https://drone.acp.homeoffice.gov.uk/UKHomeOffice/pttg-ip-fm-ui
 
-	./scripts/deploy -e dev ./pttg-ip-api.yaml
