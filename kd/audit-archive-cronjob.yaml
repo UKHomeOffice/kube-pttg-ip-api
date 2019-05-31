@@ -13,13 +13,13 @@ spec:
   startingDeadlineSeconds: 120
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         metadata:
           labels:
             name: pttg-ip-audit-archive-cronjob
         spec:
           restartPolicy: Never
-          backoffLimit: 0
           containers:
           - name: pttg-trigger-audit-archive
             image: quay.io/ukhomeofficedigital/openjdk11
