@@ -76,7 +76,7 @@ spec:
             - name: bundle
               mountPath: /etc/ssl/certs
               readOnly: true
-  
+
         - name: proxy
           image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.9
           imagePullPolicy: Always
@@ -113,7 +113,18 @@ spec:
             - name: ADD_NGINX_LOCATION_CFG
               value: 'proxy_read_timeout 99999s; proxy_connect_timeout 60s;'
             - name: ADD_NGINX_SERVER_CFG
-              value: 'gzip off; location = /reload { allow 127.0.0.1; deny all; content_by_lua_block { os.execute("touch /tmp/nginx-reload-triggered; /usr/local/openresty/nginx/sbin/nginx -s reload; touch /tmp/nginx-reload-complete;") } }'
+              value: 'gzip off;
+
+                      location = /reload {
+                        allow 127.0.0.1;
+                        deny all;
+                        content_by_lua_block {
+                          os.execute("touch /tmp/nginx-reload-triggered; /usr/local/openresty/nginx/sbin/nginx -s reload; touch /tmp/nginx-reload-complete;")
+                        }
+                      location = /archive {
+                        proxy_read_timeout 99999s;
+                        proxy_connect_timeout 60s;
+                      }'
           volumeMounts:
             - name: certs
               mountPath: /certs
@@ -127,7 +138,7 @@ spec:
           ports:
             - name: https
               containerPort: 10443
-        
+
         - name: pttg-ip-api
           image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
           imagePullPolicy: Always
