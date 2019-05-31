@@ -9,16 +9,17 @@ spec:
   schedule: "30 7 * * *"
   successfulJobsHistoryLimit: 12
   failedJobsHistoryLimit: 12
-  concurrencyPolicy: Replace
+  concurrencyPolicy: Forbid
   startingDeadlineSeconds: 120
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         metadata:
           labels:
             name: pttg-ip-audit-archive-cronjob
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
           - name: pttg-trigger-audit-archive
             image: quay.io/ukhomeofficedigital/openjdk11
