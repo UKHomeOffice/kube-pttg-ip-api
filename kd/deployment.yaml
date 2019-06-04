@@ -76,7 +76,7 @@ spec:
             - name: bundle
               mountPath: /etc/ssl/certs
               readOnly: true
-  
+
         - name: proxy
           image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.9
           imagePullPolicy: Always
@@ -127,7 +127,7 @@ spec:
           ports:
             - name: https
               containerPort: 10443
-        
+
         - name: pttg-ip-api
           image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
           imagePullPolicy: Always

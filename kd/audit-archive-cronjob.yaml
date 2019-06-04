@@ -28,7 +28,7 @@ spec:
               runAsUser: 1000
             command: ["/bin/sh", "-ce"]
             args:
-              - 'http_status=$( curl -gkv -X POST -H "Authorization: Basic $(echo -n ${IP_API_SERVICE_AUTH} | base64)" ${PTTG_IP_API_URL}/archive ); if [[ $http_status -eq 200 ]]; then exit 0; else exit 1; fi'
+              - 'http_status=$( curl -gk -w "%{http_code}" -X POST -H "Authorization: Basic $(echo -n ${IP_API_SERVICE_AUTH} | base64)" ${PTTG_IP_API_URL}/archive ); if [ $http_status -eq 200 ]; then exit 0; else exit 1; fi'
             env:
               - name: IP_API_SERVICE_AUTH
                 valueFrom:
