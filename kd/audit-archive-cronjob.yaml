@@ -2,13 +2,11 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: pttg-ip-audit-archive-cronjob
-  annotations:
-    downscaler/uptime: {{.UPTIME_SCHEDULE}}
   labels:
     version: {{.VERSION}}
     application: pttg-ip-api
 spec:
-  schedule: "30 7 * * *"
+  schedule: {{.ARCHIVE_CRON_SCHEDULE}}
   successfulJobsHistoryLimit: 12
   failedJobsHistoryLimit: 12
   concurrencyPolicy: Forbid
