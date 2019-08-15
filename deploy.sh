@@ -12,7 +12,7 @@ if [[ ${ENVIRONMENT} == "pr" ]] ; then
     echo "deploy ${VERSION} to pr namespace, using PTTG_IP_PR drone secret"
     export KUBE_TOKEN=${PTTG_IP_PR}
     # An empty "downscaler/uptime" annotation is ignored
-    export UPTIME_SCHEDULE=''
+    export UPTIME_SCHEDULE='Mon-Sun 20:00-20:00 Europe/London'
     export ARCHIVE_CRON_SCHEDULE='30 7 * * *'
 else
     if [[ ${ENVIRONMENT} == "test" ]] ; then
