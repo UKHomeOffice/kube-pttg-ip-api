@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 
 export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export KUBE_SERVER=${KUBE_SERVER}
