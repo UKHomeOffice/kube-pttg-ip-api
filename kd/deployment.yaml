@@ -188,21 +188,21 @@ spec:
                 configMapKeyRef:
                   name: rest-retry-config
                   key: AUDIT_SERVICE_RETRY_DELAY
-            - name: THRESHOLDS_YEARLY_BASE
+            - name: THRESHOLD_YEARLY_BASE
               valueFrom:
                 configMapKeyRef:
-                  name: thresholds-config
-                  key: THRESHOLDS_YEARLY_BASE
-            - name: THRESHOLDS_YEARLY_ONEDEPENDANT
+                  name: THRESHOLD-config
+                  key: THRESHOLD_YEARLY_BASE
+            - name: THRESHOLD_YEARLY_ONEDEPENDANT
               valueFrom:
                 configMapKeyRef:
-                  name: thresholds-config
-                  key: THRESHOLDS_YEARLY_ONEDEPENDANT
-            - name: THRESHOLDS_YEARLY_REMAININGDEPENDANTSINCREMENT
+                  name: THRESHOLD-config
+                  key: THRESHOLD_YEARLY_ONEDEPENDANT
+            - name: THRESHOLD_YEARLY_REMAININGDEPENDANTSINCREMENT
               valueFrom:
                 configMapKeyRef:
-                  name: thresholds-config
-                  key: THRESHOLDS_YEARLY_REMAININGDEPENDANTSINCREMENT
+                  name: THRESHOLD-config
+                  key: THRESHOLD_YEARLY_REMAININGDEPENDANTSINCREMENT
           resources:
             limits:
               cpu: 1600m
