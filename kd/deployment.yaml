@@ -3,10 +3,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: pttg-ip-api
-  {{- if ne .UPTIME_SCHEDULE "" }}
   annotations:
     downscaler/uptime: {{.UPTIME_SCHEDULE}}
-  {{- end }}
   labels:
     version: {{.VERSION}}
 spec:
