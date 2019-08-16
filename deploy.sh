@@ -47,5 +47,5 @@ kd --insecure-skip-tls-verify \
 if [[ ${ENVIRONMENT} != "pr" ]] ; then
     echo "Changing downscaler to prevent restart tomorrow morning"
 #    kubectl patch deployment pttg-ip-api -p $'metadata:\n  annotations:\n    downscaler/uptime: Mon-Fri 20:00-20:00 Europe/London'
-    kd --insecure-skip-tls-verify run patch deployment pttg-ip-api -p $'metadata:\n  annotations:\n    downscaler/uptime: Mon-Fri 20:00-20:00 Europe/London'
+    kd run patch deployment pttg-ip-api --insecure-skip-tls-verify -p $'metadata:\n  annotations:\n    downscaler/uptime: Mon-Fri 20:00-20:00 Europe/London'
 fi
