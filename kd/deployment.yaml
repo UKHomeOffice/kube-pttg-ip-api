@@ -191,17 +191,17 @@ spec:
             - name: THRESHOLD_YEARLY_BASE
               valueFrom:
                 configMapKeyRef:
-                  name: THRESHOLD-config
+                  name: thresholds-config
                   key: THRESHOLD_YEARLY_BASE
             - name: THRESHOLD_YEARLY_ONEDEPENDANT
               valueFrom:
                 configMapKeyRef:
-                  name: THRESHOLD-config
+                  name: thresholds-config
                   key: THRESHOLD_YEARLY_ONEDEPENDANT
             - name: THRESHOLD_YEARLY_REMAININGDEPENDANTSINCREMENT
               valueFrom:
                 configMapKeyRef:
-                  name: THRESHOLD-config
+                  name: thresholds-config
                   key: THRESHOLD_YEARLY_REMAININGDEPENDANTSINCREMENT
           resources:
             limits:
