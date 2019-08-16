@@ -23,8 +23,7 @@ else
         export KUBE_TOKEN=${PTTG_IP_DEV}
     fi
     # Scale down all pods every night in non-prod.
-    # Using the same from/to time on annotation "downscaler/uptime" scales down at that time but never scales up.
-    export UPTIME_SCHEDULE='Mon-Sun 20:00-20:00 Europe/London'
+    export UPTIME_SCHEDULE='Mon-Sun 07:00-20:00 Europe/London'
     # Never run the archive in non-prod.  We don't know if the pods are actually up, and if they are we may as well save the data to test archiving anyway.
 #    export ARCHIVE_CRON_SCHEDULE='* * * * 3000'
     export ARCHIVE_CRON_SCHEDULE='30 7 * * *'
@@ -42,3 +41,9 @@ kd --insecure-skip-tls-verify \
     -f networkPolicy.yaml \
     -f deployment.yaml \
     -f service.yaml
+
+# This makes the deployment scale down at night, but prevents it from coming back up in the morning
+# This works because a kd deployment respects the downscaler times, but a kubectl patch does not
+if [[ ${ENVIRONMENT} != "pr" ]] ; then
+    kubectl patch deployment pttg-ip-api -p $'metadata:\n  annotations:\n    downscaler/uptime: Mon-Fri 20:00-20:00 Europe/London'
+fi
