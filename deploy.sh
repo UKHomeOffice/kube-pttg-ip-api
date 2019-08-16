@@ -45,5 +45,6 @@ kd --insecure-skip-tls-verify \
 # This makes the deployment scale down at night, but prevents it from coming back up in the morning
 # This works because a kd deployment respects the downscaler times, but a kubectl patch does not
 if [[ ${ENVIRONMENT} != "pr" ]] ; then
+    echo "Changing downscaler to prevent restart tomorrow morning"
     kubectl patch deployment pttg-ip-api -p $'metadata:\n  annotations:\n    downscaler/uptime: Mon-Fri 20:00-20:00 Europe/London'
 fi
