@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: pttg-ip-api
   annotations:
-    downscaler/uptime: {{.UPTIME_SCHEDULE}}
+    downscaler/downscale-period: {{.DOWNSCALE_PERIOD}}
   labels:
     version: {{.VERSION}}
 spec:
