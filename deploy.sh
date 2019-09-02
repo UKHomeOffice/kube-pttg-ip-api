@@ -23,7 +23,8 @@ else
         export KUBE_TOKEN=${PTTG_IP_DEV}
     fi
     # Scale down all pods every night in non-prod.
-    export DOWNSCALE_PERIOD='Mon-Sun 19:55:00-20:00 Europe/London'
+#    export DOWNSCALE_PERIOD='Mon-Sun 19:55:00-20:00 Europe/London'
+    export DOWNSCALE_PERIOD='Mon-Sun 14:55:00-15:00 Europe/London'
     # Never run the archive in non-prod.  We don't know if the pods are actually up, and if they are we may as well save the data to test archiving anyway.
 #    export ARCHIVE_CRON_SCHEDULE='* * * * 3000'
     export ARCHIVE_CRON_SCHEDULE='30 7 * * *'
