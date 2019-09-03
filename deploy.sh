@@ -24,7 +24,7 @@ else
     fi
     # During overlapping time periods, the downscaler does nothing. This hack forces the service to be down overnight
     # but if it is brought up manually during the day it will stay up.
-    export DOWNSCALE_PERIOD='Mon-Sun 10:45-10:55 Europe/London'
+    export DOWNSCALE_PERIOD='Mon-Sun 02:00-20:00 Europe/London'
     # Never run the archive in non-prod.  We don't know if the pods are actually up, and if they are we may as well save the data to test archiving anyway.
 #    export ARCHIVE_CRON_SCHEDULE='* * * * 3000'
     export ARCHIVE_CRON_SCHEDULE='30 7 * * *'
