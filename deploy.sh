@@ -22,9 +22,10 @@ else
         echo "deploy ${VERSION} to dev namespace, using PTTG_IP_DEV drone secret"
         export KUBE_TOKEN=${PTTG_IP_DEV}
     fi
-    # Scale down all pods every night in non-prod.
-#    export DOWNSCALE_PERIOD='Mon-Sun 19:55:00-20:00 Europe/London'
-    export DOWNSCALE_PERIOD='Mon-Sun 14:55:00-15:00 Europe/London'
+    # During overlapping time periods, the downscaler does nothing. This hack forces the service to be down overnight
+    # but if it is brought up manually during the day it will stay up.
+    export DOWNTIME='Mon-Sun 00:00-23:60 Europe/London'
+    export UPTIME='Mon-Sun 07:00-09:32 Europe/London'
     # Never run the archive in non-prod.  We don't know if the pods are actually up, and if they are we may as well save the data to test archiving anyway.
 #    export ARCHIVE_CRON_SCHEDULE='* * * * 3000'
     export ARCHIVE_CRON_SCHEDULE='30 7 * * *'
