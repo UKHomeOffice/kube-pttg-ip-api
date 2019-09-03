@@ -5,7 +5,6 @@ metadata:
   name: pttg-ip-api
   annotations:
     downscaler/downscale-period: {{.DOWNSCALE_PERIOD}}
-    downscaler/upscale-period: {{.UPSCALE_PERIOD}}
   labels:
     version: {{.VERSION}}
 spec:
