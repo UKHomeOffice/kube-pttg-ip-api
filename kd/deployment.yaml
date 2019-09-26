@@ -78,7 +78,7 @@ spec:
               readOnly: true
 
         - name: proxy
-          image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.9
+          image: quay.io/ukhomeofficedigital/nginx-proxy:v3.4.22
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true
@@ -103,6 +103,8 @@ spec:
             - name: ENABLE_UUID_PARAM
               value: 'FALSE'
             - name: HTTPS_REDIRECT
+              value: 'FALSE'
+            - name: ERROR_REDIRECT_CODES
               value: 'FALSE'
             - name: BASIC_AUTH
               value: /etc/nginx/service-secrets/.htpasswd_1
