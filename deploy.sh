@@ -15,9 +15,10 @@ else
     export KUBE_TOKEN=${PTTG_IP_DEV}
 fi
 
-cd kd
+cd kd || exit
 
 kd --insecure-skip-tls-verify \
+    -f ingress-certificate.yaml \
     -f audit-archive-cronjob.yaml \
     -f networkPolicy.yaml \
     -f deployment.yaml \
