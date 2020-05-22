@@ -25,8 +25,7 @@ spec:
         - name: registrykey
       containers:
         - name: proxy
-          image: quay.io/ukhomeofficedigital/nginx-proxy:v3.4.26
-#          image: quay.io/ukhomeofficedigital/nginx-proxy:v3.4.26
+          image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.9
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true
