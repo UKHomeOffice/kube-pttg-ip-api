@@ -87,7 +87,7 @@ spec:
                 - SETGID
           env:
             - name: JAVA_OPTS
-              value: '-Xms150m -Xmx250m -Djavax.net.ssl.trustStore=/etc/keystore/truststore.jks'
+              value: '-Xms150m -Xmx250m'
             - name: JDK_TRUST_FILE
               value: '/etc/keystore/truststore.jks'
             - name: SERVER_PORT
@@ -182,8 +182,11 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 10
           volumeMounts:
-            - mountPath: /etc/keystore
-              name: keystore
+            - name: keystore
+              mountPath: /etc/keystore
+              readOnly: true
+            - name: certs
+              mountPath: /certs
               readOnly: true
       volumes:
         - name: keystore
