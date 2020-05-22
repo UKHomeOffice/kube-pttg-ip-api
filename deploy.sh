@@ -19,7 +19,7 @@ fi
 cd kd || exit
 
 kd --insecure-skip-tls-verify \
-    -f ingress-certificate.yaml \
+    -f pod-to-pod-server-certificate.yaml \
     -f audit-archive-cronjob.yaml \
     -f networkPolicy.yaml \
     -f deployment.yaml \
