@@ -2,12 +2,13 @@
 
 export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export KUBE_SERVER=${KUBE_SERVER}
+export DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-pttg-ip-api}
 
 if [[ -z ${VERSION} ]] ; then
     export VERSION=${IMAGE_VERSION}
 fi
 
-echo "deploy ${VERSION} to ${ENVIRONMENT} namespace - using Kube token stored as drone secret"
+echo "deploy version: ${VERSION} of: ${DEPLOYMENT_NAME} to:${ENVIRONMENT} namespace - using Kube token stored as drone secret"
 
 if [[ ${ENVIRONMENT} == "pr" ]] ; then
     export KUBE_TOKEN=${PTTG_IP_PR}
