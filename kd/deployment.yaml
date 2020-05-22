@@ -54,9 +54,9 @@ spec:
             - name: BASIC_AUTH
               value: /etc/nginx/service-secrets/.htpasswd_1
             - name: SERVER_CERT
-              value: /certs/tls.pem
+              value: /certs/tls.crt
             - name: SERVER_KEY
-              value: /certs/tls-key.pem
+              value: /certs/tls.key
             - name: ADD_NGINX_LOCATION_CFG
               value: 'proxy_read_timeout 99999s; proxy_connect_timeout 60s;'
             - name: ADD_NGINX_SERVER_CFG
@@ -183,7 +183,7 @@ spec:
             - name: keystore
               mountPath: /etc/keystore
               readOnly: true
-            - name: certs
+            - name: bundle
               mountPath: /certs
               readOnly: true
       volumes:
