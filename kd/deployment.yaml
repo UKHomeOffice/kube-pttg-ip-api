@@ -74,6 +74,7 @@ spec:
           ports:
             - name: https
               containerPort: 10443
+
         - name: pttg-ip-api
           image: quay.io/ukhomeofficedigital/pttg-ip-api:{{.VERSION}}
           imagePullPolicy: Always
@@ -183,9 +184,10 @@ spec:
             - name: keystore
               mountPath: /etc/keystore
               readOnly: true
-            - name: certs
+            - name: bundle
               mountPath: /certs
               readOnly: true
+
       volumes:
         - name: keystore
           emptyDir:
@@ -193,6 +195,9 @@ spec:
         - name: certs
           secret:
             secretName: {{ .DEPLOYMENT_NAME }}-service-tls-cmio
+        - name: bundle
+          configMap:
+            name: bundle
         - name: secrets
           emptyDir:
             medium: "Memory"
