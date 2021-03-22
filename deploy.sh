@@ -4,7 +4,11 @@ export KUBE_NAMESPACE=${KUBE_NAMESPACE}
 export KUBE_SERVER=${KUBE_SERVER}
 export DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-pttg-ip-api}
 
-if [[ -z ${VERSION} ]] ; then
+if [[ -z ${IMAGE_VERSION} ]] ; then
+    echo "promoting the image built in the promoted job"
+    export VERSION=build-${DRONE_BUILD_PARENT}
+else
+    echo "promoting the image specified in the 'drone build promote' command"
     export VERSION=${IMAGE_VERSION}
 fi
 
