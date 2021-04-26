@@ -18,7 +18,8 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: pttg-pm-cleardown
-              image: quay.io/ukhomeofficedigital/openjdk11
+              #image: quay.io/ukhomeofficedigital/openjdk11
+              image: quay.io/ukhomeofficedigital/pttg-ip-api
               securityContext:
                 runAsNonRoot: true
                 runAsUser: 1000
