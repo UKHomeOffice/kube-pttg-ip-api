@@ -25,7 +25,9 @@ cd kd || exit
 kd --insecure-skip-tls-verify \
     -f pod-to-pod-server-certificate.yaml \
     -f audit-archive-cronjob.yaml \
+# need to add an if here for not pr
     -f namespace-cleardown-cronjob.yaml \
+# so do not deploy cleardown script to Prod!
     -f networkPolicy.yaml \
     -f deployment.yaml \
     -f service.yaml

@@ -1,4 +1,4 @@
-apiVersion: batch/v1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: pttg-pm-cleardown
@@ -23,5 +23,8 @@ spec:
                 runAsUser: 1000
               imagePullPolicy: IfNotPresent
               command:
-                - "kubectl delete pods --all -n pttg-ip-dev"
+                - "kubectl delete pods --all -n ${IP_NAMESPACE}"
+            env:
+              - name: IP_NAMESPACE
+                value: 'pttg-ip-{{.ENVIRONMENT}}'
           restartPolicy: OnFailure
