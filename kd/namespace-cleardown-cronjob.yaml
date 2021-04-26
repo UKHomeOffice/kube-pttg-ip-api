@@ -22,7 +22,7 @@ spec:
               securityContext:
                 runAsNonRoot: true
                 runAsUser: 1000
-              command: ["kubectl -n ${IP_NAMESPACE} scale deployment pttg-ip-api --replicas=0"]
+              command: ["kubectl -n ptt-ip-dev scale deployment pttg-ip-api --replicas=0"]
               env:
                 - name: IP_NAMESPACE
                   value: 'pttg-ip-{{.ENVIRONMENT}}'
