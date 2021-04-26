@@ -25,7 +25,6 @@ cd kd || exit
 kd --insecure-skip-tls-verify \
     -f pod-to-pod-server-certificate.yaml \
     -f audit-archive-cronjob.yaml \
-    -f namespace-cleardown-cronjob.yaml \
     -f networkPolicy.yaml \
     -f deployment.yaml \
     -f service.yaml
