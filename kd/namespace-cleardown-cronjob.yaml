@@ -1,27 +1,27 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: pttg-ip-namespace-cleardown-cronjob
+  name: pttg-pm-cleardown
   labels:
     version: {{.VERSION}}
     application: pttg-ip-api
 spec:
-  schedule: "0 15 * * *"
-  successfulJobsHistoryLimit: 12
-  failedJobsHistoryLimit: 12
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 120
   jobTemplate:
     spec:
-      backoffLimit: 0
       template:
-        metadata:
-          labels:
-            name: pttg-ip-namespace-cleardown-cronjob
         spec:
-          restartPolicy: Never
-          command:
-            - 'kubectl delete pods,deployments,services,jobs --all -n ${PTTG_IP_API}'
-          env:
-            - name: PTTG_IP_API
-              value: 'pttg-ip-{{.ENVIRONMENT}}'
+          containers:
+            - name: pttg-pm-cleardown
+              image: quay.io/ukhomeofficedigital/openjdk11
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1000
+              imagePullPolicy: IfNotPresent
+              command:
+                - "kubectl delete pods --all -n pttg-ip-dev"
+          restartPolicy: OnFailure
