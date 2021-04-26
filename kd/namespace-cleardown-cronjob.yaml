@@ -22,7 +22,7 @@ spec:
               securityContext:
                 runAsNonRoot: true
                 runAsUser: 1000
-              command: "kubectl delete pods --all -n ${IP_NAMESPACE}"
+              command: ["kubectl delete pods --all -n ${IP_NAMESPACE}"]
               env:
                 - name: IP_NAMESPACE
                   value: 'pttg-ip-{{.ENVIRONMENT}}'
