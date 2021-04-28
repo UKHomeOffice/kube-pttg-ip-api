@@ -5,6 +5,8 @@ metadata:
   name: pttg-ip-api
   labels:
     version: {{.VERSION}}
+  annotations:
+    downscaler/downtime: Mon-Sun 18:00 CET
 spec:
   replicas: 2
   selector:
