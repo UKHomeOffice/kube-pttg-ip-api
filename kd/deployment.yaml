@@ -2,11 +2,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pttg-ip-api
+  annotations:
+    downscaler/downtime: Mon-Sun 12:30-13:30 Europe/London
   labels:
     version: {{.VERSION}}
-  annotations:
-    downscaler/downtime: Mon-Sun 11:45-13:00 Europe/London
+  name: pttg-ip-api
 spec:
   replicas: 2
   selector:
