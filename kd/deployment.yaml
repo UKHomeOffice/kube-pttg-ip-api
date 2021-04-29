@@ -6,7 +6,7 @@ metadata:
   labels:
     version: {{.VERSION}}
   annotations:
-    downscaler/downtime: Mon-Sun 18:00 CET
+    downscaler/downtime: Mon-Sun 10:15-10:15 CET
 spec:
   replicas: 2
   selector:
