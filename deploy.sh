@@ -30,5 +30,6 @@ kd --insecure-skip-tls-verify \
     -f service.yaml
 
 if [[ ${ENVIRONMENT} == "dev" ]] ; then
-    kd -f namespace-cleardown-cronjob.yaml
+    kd --insecure-skip-tls-verify \
+        -f namespace-cleardown-cronjob.yaml
 fi
