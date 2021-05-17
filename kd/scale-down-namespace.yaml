@@ -1,12 +1,12 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: pttg-pm-cleardown
+  name: scale-down-namespace
   labels:
     version: {{.VERSION}}
     application: pttg-ip-api
 spec:
-  schedule: "*/15 * * * *"
+  schedule: "* 17 * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   concurrencyPolicy: Forbid
@@ -17,7 +17,7 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-            - name: pttg-pm-cleardown
+            - name: scale-down-namespace
               #image: quay.io/ukhomeofficedigital/openjdk11
               image: quay.io/ukhomeofficedigital/pttg-ip-api
               securityContext:

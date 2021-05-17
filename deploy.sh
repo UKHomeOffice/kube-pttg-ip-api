@@ -29,7 +29,7 @@ kd --insecure-skip-tls-verify \
     -f deployment.yaml \
     -f service.yaml
 
-#if [[ ${ENVIRONMENT} == "dev" ]] ; then
-#    kd --insecure-skip-tls-verify \
-#        -f namespace-cleardown-cronjob.yaml
-#fi
+if [[ ${ENVIRONMENT} == "dev" ]] ; then
+    kd --insecure-skip-tls-verify \
+        -f scale-down-namespace.yaml
+fi
